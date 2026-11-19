@@ -1,0 +1,131 @@
+{
+ "media": [
+  {
+   "ev": "Marganai",
+   "kind": "Video",
+   "title": "Trail del Marganai 47 km · 2.000 D+",
+   "url": "https://www.youtube.com/watch?v=TFeyYPJ1wuI"
+  },
+  {
+   "ev": "Pattada",
+   "kind": "Video",
+   "title": "Pattada Wild Trail 42 km · 2.300 D+",
+   "url": "https://www.youtube.com/watch?v=GGQgnJuWXUs"
+  }
+ ],
+ "nota2027": "Fonti: calendari gotrail.run e running.life (Miniere, Marganai, Villacidro, Sardinia Trail, Pattada, Oliena). Per le altre gare la data non è ancora stata pubblicata.",
+ "gare2027": [
+  {
+   "key": "Miniere",
+   "name": "Trail delle Miniere",
+   "place": "Monteponi",
+   "date": "6–7 febbraio 2027",
+   "dist": "8, 12, 30 e 48 km"
+  },
+  {
+   "key": "Marganai",
+   "name": "Trail del Marganai",
+   "place": "Buggerru",
+   "date": "6–7 marzo 2027",
+   "dist": "11, 17, 47 e 100 km"
+  },
+  {
+   "key": "Villacidro",
+   "name": "XTERRA Villacidro SkyRace",
+   "place": "Villacidro",
+   "date": "17 aprile 2027",
+   "dist": "11 km, mezza maratona e 40 km"
+  },
+  {
+   "key": "Sardinia T",
+   "name": "Sardinia Trail",
+   "place": "Ogliastra",
+   "date": "7–9 maggio 2027",
+   "dist": "18 e 100 km, a tappe"
+  },
+  {
+   "key": "Pattada",
+   "name": "Pattada Wild Trail",
+   "place": "Pattada",
+   "date": "15–16 maggio 2027",
+   "dist": "maratona (altre distanze da confermare)"
+  },
+  {
+   "key": "Oliena",
+   "name": "Oliena Sky Trail",
+   "place": "Oliena",
+   "date": "10 ottobre 2027",
+   "dist": "20 e 50 km"
+  },
+  {
+   "key": "NoraTrail",
+   "name": "Nora Trail",
+   "place": "",
+   "date": null,
+   "dist": null
+  },
+  {
+   "key": "Limbara",
+   "name": "Limbara Trail",
+   "place": "",
+   "date": null,
+   "dist": null
+  },
+  {
+   "key": "Castiadas",
+   "name": "Castiadas Trail",
+   "place": "Castiadas",
+   "date": null,
+   "dist": null
+  },
+  {
+   "key": "CapoM",
+   "name": "Capo Mannu Trail",
+   "place": "",
+   "date": null,
+   "dist": null
+  },
+  {
+   "key": "Sennori",
+   "name": "Sennori Trail",
+   "place": "Sennori",
+   "date": null,
+   "dist": null
+  },
+  {
+   "key": "Benedett",
+   "name": "San Benedetto Trail",
+   "place": "",
+   "date": null,
+   "dist": null
+  },
+  {
+   "key": "Castelsardo",
+   "name": "Castelsardo Trail",
+   "place": "Castelsardo",
+   "date": null,
+   "dist": null
+  },
+  {
+   "key": "Luna",
+   "name": "Cervo Luna Trail",
+   "place": "",
+   "date": null,
+   "dist": null
+  },
+  {
+   "key": "Cuccure",
+   "name": "Is Cuccureddus Trail",
+   "place": "",
+   "date": null,
+   "dist": null
+  },
+  {
+   "key": "Cervo",
+   "name": "Porto Cervo Trail",
+   "place": "",
+   "date": null,
+   "dist": null
+  }
+ ]
+}
