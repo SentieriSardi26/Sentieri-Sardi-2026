@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="it"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sentieri Sardi 2026</title>
+<meta name="theme-color" content="#1D6A54">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* Layout: scheda a sezioni con barra di navigazione in basso su telefono, in alto su PC.
+   Colori: verde mirto su neutri verdastri (macchia mediterranea, granito). */
+:root{
+  --bg:#F1F4F0; --surface:#FFFFFF; --ink:#16201B; --muted:#58675F; --line:#D8DFD9;
+  --accent:#1D6A54; --accent-ink:#FFFFFF; --accent-soft:#DCEBE4; --warn:#9A5B13; --warn-soft:#F6E8D2;
+  --f-display:'Barlow Condensed','Arial Narrow',system-ui,sans-serif;
+  --f-body:'Barlow',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1613; --surface:#16221E; --ink:#E5EEE9; --muted:#93A59C; --line:#273630;
+    --accent:#5CC4A0; --accent-ink:#06130E; --accent-soft:#1B3029; --warn:#E3B067; --warn-soft:#33281A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1613; --surface:#16221E; --ink:#E5EEE9; --muted:#93A59C; --line:#273630;
+  --accent:#5CC4A0; --accent-ink:#06130E; --accent-soft:#1B3029; --warn:#E3B067; --warn-soft:#33281A;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg); color:var(--ink); font-family:var(--f-body); font-size:16px; line-height:1.45;
+  padding-inline:max(16px,env(safe-area-inset-left,0px)) max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 84px;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+.wrap{max-width:980px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:.01em;margin:0;text-wrap:balance;line-height:1.1}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* testata */
+.top{padding-top:20px}
+.brand{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand h1{font-size:34px;text-transform:uppercase}
+.brand .sub{color:var(--muted);font-size:14px}
+
+/* navigazione */
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;display:flex;background:var(--surface);border-top:1px solid var(--line);
+  padding:6px max(8px,env(safe-area-inset-left,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-right,0px))}
+.tabs button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:0;padding:6px 2px;border-radius:8px;color:var(--muted);font-size:12px;font-weight:500}
+.tabs button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tabs button[aria-current="page"]{color:var(--accent);background:var(--accent-soft)}
+@media (min-width:820px){
+  body{padding-block:0 48px}
+  .tabs{position:sticky;top:env(safe-area-inset-top,0px);bottom:auto;border:0;border-bottom:1px solid var(--line);background:var(--bg);padding:10px 0 0;margin-top:14px;gap:4px}
+  .tabs button{flex:0 0 auto;flex-direction:row;gap:8px;font-size:15px;padding:9px 16px;border-radius:8px 8px 0 0}
+  .tabs button[aria-current="page"]{background:var(--surface);box-shadow:inset 0 -2px 0 var(--accent)}
+}
+
+main{padding-top:20px;display:flex;flex-direction:column;gap:18px}
+.lead{color:var(--muted);margin:0;max-width:62ch}
+.note{background:var(--warn-soft);color:var(--ink);border-radius:8px;padding:10px 12px;font-size:14px}
+.note b{color:var(--warn)}
+
+/* riepilogo */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.stat .v{font-family:var(--f-display);font-weight:700;font-size:32px;line-height:1}
+.stat .l{color:var(--muted);font-size:13px;margin-top:4px}
+
+/* schede evento */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;min-width:0;display:flex;flex-direction:column}
+.card-h{padding:14px 16px 10px;display:flex;flex-direction:column;gap:4px}
+.card-h h3{font-size:24px}
+.date{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:14px;color:var(--muted)}
+.date .tbd{color:var(--warn)}
+.link{background:none;border:0;padding:0;color:var(--accent);font-size:13px;text-decoration:underline;text-underline-offset:2px}
+.dist{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;border-top:1px solid var(--line);padding:11px 16px;text-align:left}
+.dist:hover{background:var(--accent-soft)}
+.dist .km{font-family:var(--f-display);font-weight:700;font-size:26px;min-width:76px;line-height:1}
+.dist .km small{font-size:14px;font-weight:600;color:var(--muted);margin-left:2px}
+.dist .meta{flex:1;min-width:0;font-size:14px;color:var(--muted)}
+.dist .meta b{color:var(--ink);font-weight:600}
+.dist .chev{color:var(--accent);font-size:20px}
+form.inline{display:flex;gap:8px;flex-wrap:wrap}
+input[type=text],input[type=search],input[type=url],select{background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;min-width:0;width:100%;color:var(--ink)}
+form.inline input{flex:1 1 180px;width:auto}
+.btn{background:var(--accent);color:var(--accent-ink);border:0;border-radius:8px;padding:10px 16px;font-weight:600}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--line)}
+.btn.sm{padding:6px 12px;font-size:14px}
+
+/* segmenti e filtri */
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{background:none;border:0;padding:9px 16px;font-weight:500;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.filters .grow{flex:1 1 200px;min-width:0}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field label{font-size:13px;color:var(--muted)}
+
+/* tabelle */
+.tblbox{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th{font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:13px;color:var(--muted);text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+td.pos{font-family:var(--f-display);font-weight:700;font-size:20px;width:56px;white-space:nowrap}
+td.pos.top3{color:var(--accent)}
+.name{background:none;border:0;padding:0;text-align:left;font-weight:600;color:var(--ink);text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.name:hover{color:var(--accent);text-decoration-color:var(--accent)}
+.sub{display:block;font-size:13px;color:var(--muted);font-weight:400}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--accent-soft);color:var(--accent)}
+.more{align-self:center}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:12px;padding:22px;color:var(--muted);text-align:center}
+
+/* profilo atleta */
+.prof h2{font-size:38px;text-transform:uppercase}
+.prof .who{color:var(--muted);margin-top:4px}
+.results{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+.results button.hit{display:flex;justify-content:space-between;gap:12px;align-items:center;background:none;border:0;border-bottom:1px solid var(--line);padding:11px 14px;text-align:left;width:100%}
+.results button.hit:last-child{border-bottom:0}
+.results button.hit:hover{background:var(--accent-soft)}
+
+/* media */
+.mgrp{display:flex;flex-direction:column;gap:8px}
+.mgrp h3{font-size:22px}
+.mitem{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.mitem a{flex:1;min-width:0;color:var(--ink);font-weight:600;overflow-wrap:anywhere}
+.mitem a:hover{color:var(--accent)}
+.formbox{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.formbox .full{grid-column:1/-1}
+
+/* prossime gare */
+.src{font-size:13px;color:var(--muted)}
+.back{align-self:flex-start}
+.hide{display:none!important}
+@media (prefers-reduced-motion:no-preference){.card,.stat{transition:border-color .15s}.card:hover{border-color:var(--accent)}}
+</style>
+</head><body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>Sentieri Sardi 2026</h1>
+      <span class="sub">Gare di trail running in Sardegna</span>
+    </div>
+  </header>
+  <nav class="tabs" id="tabs" aria-label="Sezioni"></nav>
+  <main id="view"></main>
+</div>
+
+<script>
+(async function(){
+let D,X;
+try{
+  [D,X]=await Promise.all([fetch('dati.json').then(r=>r.json()),fetch('extra.json').then(r=>r.json())]);
+}catch(e){
+  document.getElementById('view').innerHTML='<div class="empty">Impossibile caricare i dati. Controlla la connessione e riprova.</div>';
+  return;
+}
+const races=D.races, ath=D.athletes;
+
+/* ---------- dati derivati ---------- */
+races.forEach(r=>{r.res=[]});
+ath.forEach((a,ai)=>a.r.forEach(x=>races[x[0]].res.push({ai,pos:x[1],ps:x[2],time:x[3],pts:x[4]})));
+races.forEach(r=>r.res.sort((a,b)=>(a.pos??9999)-(b.pos??9999)));
+races.forEach(r=>{r.nM=r.res.filter(x=>ath[x.ai].s==='M').length;r.nF=r.res.filter(x=>ath[x.ai].s==='F').length;});
+const events=[];
+races.forEach((r,i)=>{
+  let e=events.find(x=>x.key===r.event);
+  if(!e){e={key:r.event,name:r.eventName,races:[]};events.push(e);}
+  e.races.push(i);
+});
+events.forEach(e=>{const r0=races[e.races[0]];e.date=r0.date;e.ds=r0.ds;});
+events.sort((a,b)=>(a.ds||'9').localeCompare(b.ds||'9'));
+const yr=y=>y>=2015?'anno n.d.':y;
+const catList=[...new Set(ath.map(a=>a.c))].sort();
+const catCount={};ath.forEach(a=>{catCount[a.c]=(catCount[a.c]||0)+1});
+
+/* ---------- calendari ---------- */
+const E27=X.gare2027||[];
+const MEDIA=X.media||[];
+
+/* ---------- utilità ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const norm=s=>String(s).normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+const n2=n=>n.toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2});
+const n0=n=>n.toLocaleString('it-IT');
+const fmtTime=t=>t?t.replace(/\.\d+$/,'').replace(/^0(\d:)/,'$1'):'—';
+const sexName=s=>s==='F'?'Donna':'Uomo';
+const raceTitle=r=>r.id.startsWith('SardT')?'Tappa '+r.id.slice(-1):'';
+const titleCase=s=>s.toLowerCase().replace(/(^|[\s'’-])(\p{L})/gu,(m,a,b)=>a+b.toUpperCase());
+const date26=k=>{const e=events.find(x=>x.key===k);return e?e.date:null;};
+const date27=e=>e.date||null;
+
+/* ---------- stato ---------- */
+const TABS=[
+ ['gare','Gare 2026','<path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/>'],
+ ['media','Foto e video','<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M21 16l-5-5-8 8"/>'],
+ ['atleti','Atleti','<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>'],
+ ['classifica','Classifiche','<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M7 6H4v2a3 3 0 0 0 3 3M17 6h3v2a3 3 0 0 1-3 3"/>'],
+ ['prossime','Gare 2027','<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>']
+];
+const S={view:'gare',race:null,raceSex:'ALL',ath:null,aq:'',sex:'ALL',cat:'ALL',cq:'',shown:50,editDate:null};
+const fromHash=()=>{const h=location.hash.slice(1);return TABS.some(t=>t[0]===h)?h:'gare';};
+
+/* ---------- viste ---------- */
+function vGare(){
+  const totalRes=races.reduce((s,r)=>s+r.n,0);
+  let h=`<p class="lead">Le gare del circuito nel 2026, con data, distanza e dislivello positivo. Tocca una distanza per vedere l’ordine d’arrivo e i punti assegnati.</p>
+  <div class="stats">
+    <div class="stat"><div class="v num">${events.length}</div><div class="l">eventi</div></div>
+    <div class="stat"><div class="v num">${races.length}</div><div class="l">gare e distanze</div></div>
+    <div class="stat"><div class="v num">${n0(ath.length)}</div><div class="l">atleti classificati</div></div>
+    <div class="stat"><div class="v num">${n0(totalRes)}</div><div class="l">arrivi registrati</div></div>
+  </div>
+  <div class="cards">`;
+  events.forEach(e=>{
+    const d=date26(e.key), k='26:'+e.key;
+    h+=`<section class="card"><div class="card-h"><h3>${esc(e.name)}</h3>`;
+    h+=`<div class="date">${d?esc(d):'<span class="tbd">Data da definire</span>'}</div>`;
+    h+=`</div>`;
+    e.races.forEach(i=>{
+      const r=races[i], t=raceTitle(r);
+      h+=`<button class="dist" data-act="race" data-i="${i}"><span class="km num">${r.km}<small>km</small></span>
+        <span class="meta">${t?`<b>${t}</b> · `:''}<b class="num">${n0(r.dplus)} m</b> D+ · <span class="num">${r.n}</span> arrivati</span><span class="chev" aria-hidden="true">›</span></button>`;
+    });
+    h+=`</section>`;
+  });
+  return h+`</div>`;
+}
+
+function vRace(i){
+  const r=races[i], t=raceTitle(r);
+  const rows=r.res.filter(x=>S.raceSex==='ALL'||ath[x.ai].s===S.raceSex);
+  let h=`<button class="btn ghost sm back" data-act="back">‹ Indietro</button>
+  <div><h2 style="font-size:38px;text-transform:uppercase">${esc(r.eventName)}</h2>
+  <p class="lead" style="margin-top:6px">${t?t+' · ':''}<b class="num">${r.km} km</b> · <b class="num">${n0(r.dplus)} m</b> D+ · ${r.n} arrivati${date26(r.event)?' · '+esc(date26(r.event)):''}</p></div>
+  <div class="seg" role="group" aria-label="Filtro">
+    ${[['ALL','Tutti'],['M','Uomini'],['F','Donne']].map(([v,l])=>`<button data-act="raceSex" data-v="${v}" aria-pressed="${S.raceSex===v}">${l}</button>`).join('')}
+  </div>
+  <div class="tblbox"><table><thead><tr><th>Pos.</th><th>Atleta</th><th>Tempo</th><th class="r">Punti</th></tr></thead><tbody>`;
+  rows.forEach(x=>{
+    const a=ath[x.ai];
+    h+=`<tr><td class="pos num ${x.pos&&x.pos<=3?'top3':''}">${x.pos??'—'}</td>
+      <td><button class="name" data-act="ath" data-i="${x.ai}">${esc(titleCase(a.n))}</button><span class="sub">${a.s==='F'?'Donna':'Uomo'} · ${a.c} · ${yr(a.y)}</span></td>
+      <td class="num">${fmtTime(x.time)}</td><td class="r num">${n2(x.pts)}</td></tr>`;
+  });
+  return h+`</tbody></table></div>`;
+}
+
+function vMedia(){
+  const byEv={};MEDIA.forEach(m=>{(byEv[m.ev]=byEv[m.ev]||[]).push(m);});
+  let h=`<p class="lead">Foto e video delle singole gare. I link si aprono in una nuova scheda.</p>`;
+  const used=events.filter(e=>byEv[e.key]);
+  if(!used.length) h+=`<div class="empty">Le foto e i video delle gare arriveranno presto.</div>`;
+  used.forEach(e=>{
+    h+=`<section class="mgrp"><h3>${esc(e.name)}</h3>`;
+    byEv[e.key].forEach(m=>{
+      h+=`<div class="mitem"><span class="pill">${esc(m.kind)}</span><a href="${esc(m.url)}" target="_blank" rel="noopener noreferrer">${esc(m.title||m.url)}</a></div>`;
+    });
+    h+=`</section>`;
+  });
+  return h;
+}
+
+function athList(){
+  const q=norm(S.aq.trim());
+  if(q.length<2) return `<div class="empty">Scrivi almeno due lettere del cognome o del nome.</div>`;
+  const m=ath.map((a,i)=>[a,i]).filter(([a])=>norm(a.n).includes(q)).slice(0,40);
+  if(!m.length) return `<div class="empty">Nessun atleta trovato.</div>`;
+  return `<div class="results">${m.map(([a,i])=>`<button class="hit" data-act="ath" data-i="${i}"><span><b>${esc(titleCase(a.n))}</b><span class="sub">${a.c} · ${yr(a.y)}</span></span><span class="num">${n2(a.pt)} pt</span></button>`).join('')}</div>`;
+}
+function vAtleti(){
+  if(S.ath!=null){
+    const a=ath[S.ath];
+    let h=`<button class="btn ghost sm back" data-act="athBack">‹ Cerca un altro atleta</button>
+    <div class="prof"><h2>${esc(titleCase(a.n))}</h2><div class="who">${sexName(a.s)} · ${a.y>=2015?'anno di nascita non indicato':'nato nel '+a.y} · categoria ${a.c}</div></div>
+    <div class="stats">
+      <div class="stat"><div class="v num">${a.p}°</div><div class="l">in classifica generale su ${n0(ath.length)}</div></div>
+      <div class="stat"><div class="v num">${a.pc}°</div><div class="l">nella categoria ${a.c} su ${catCount[a.c]}</div></div>
+      <div class="stat"><div class="v num">${n2(a.pt)}</div><div class="l">punti totali</div></div>
+      <div class="stat"><div class="v num">${a.g}</div><div class="l">${a.g===1?'gara disputata':'gare disputate'}</div></div>
+    </div>
+    <h3 style="font-size:24px">Gare disputate</h3>
+    <div class="tblbox"><table><thead><tr><th>Gara</th><th>Tempo</th><th class="r">Pos.</th><th class="r">Punti</th></tr></thead><tbody>`;
+    a.r.forEach(x=>{
+      const r=races[x[0]], t=raceTitle(r);
+      h+=`<tr><td><button class="name" data-act="race" data-i="${x[0]}">${esc(r.eventName)}</button><span class="sub">${t?t+' · ':''}${r.km} km · ${n0(r.dplus)} m D+</span></td>
+        <td class="num">${fmtTime(x[3])}</td><td class="r num">${x[1]??'—'}° su ${r.n}<span class="sub">${x[2]??'—'}° su ${a.s==='F'?r.nF:r.nM} ${a.s==='F'?'donne':'uomini'}</span></td><td class="r num"><b>${n2(x[4])}</b></td></tr>`;
+    });
+    return h+`</tbody></table></div>`;
+  }
+  return `<p class="lead">Cerca un atleta per nome per vedere le gare disputate, i punti e la posizione in classifica.</p>
+  <div class="field"><label for="aq">Nome o cognome</label><input type="search" id="aq" value="${esc(S.aq)}" placeholder="es. Culurgioni" autocomplete="off"></div>
+  <div id="athRes">${athList()}</div>`;
+}
+
+function clRows(){
+  let g=ath.map((a,i)=>({a,i}));
+  if(S.sex!=='ALL') g=g.filter(x=>x.a.s===S.sex);
+  if(S.cat!=='ALL') g=g.filter(x=>x.a.c===S.cat);
+  g.sort((x,y)=>x.a.p-y.a.p);
+  g.forEach((x,k)=>x.rank=k+1);
+  const q=norm(S.cq.trim());
+  if(q) g=g.filter(x=>norm(x.a.n).includes(q));
+  return g;
+}
+function clTable(){
+  const g=clRows(), part=g.slice(0,S.shown);
+  if(!g.length) return `<div class="empty">Nessun atleta corrisponde ai filtri.</div>`;
+  let h=`<div class="tblbox"><table><thead><tr><th>Pos.</th><th>Atleta</th><th class="r">Punti</th><th class="r">Gare</th></tr></thead><tbody>`;
+  part.forEach(x=>{
+    const a=x.a;
+    h+=`<tr><td class="pos num ${x.rank<=3?'top3':''}">${x.rank}</td>
+      <td><button class="name" data-act="ath" data-i="${x.i}">${esc(titleCase(a.n))}</button><span class="sub">${a.c} · ${yr(a.y)}</span></td>
+      <td class="r num"><b>${n2(a.pt)}</b></td><td class="r num">${a.g}</td></tr>`;
+  });
+  h+=`</tbody></table></div>`;
+  if(g.length>part.length) h+=`<button class="btn ghost more" data-act="more">Mostra altri (${part.length} di ${n0(g.length)})</button>`;
+  else h+=`<span class="src more">${n0(g.length)} atleti</span>`;
+  return h;
+}
+function vClass(){
+  const cats=catList.filter(c=>S.sex==='ALL'||c[0]===S.sex);
+  const title=S.cat!=='ALL'?`Categoria ${S.cat}`:S.sex==='M'?'Classifica uomini':S.sex==='F'?'Classifica donne':'Classifica generale';
+  return `<p class="lead">Classifica del circuito 2026 con i punti di tutte le gare. Scegli generale, uomini o donne, poi una categoria.</p>
+  <div class="filters">
+    <div class="seg" role="group" aria-label="Sesso">${[['ALL','Generale'],['M','Uomini'],['F','Donne']].map(([v,l])=>`<button data-act="clSex" data-v="${v}" aria-pressed="${S.sex===v}">${l}</button>`).join('')}</div>
+    <div class="field"><label for="clCat">Categoria</label><select id="clCat"><option value="ALL">Tutte le categorie</option>${cats.map(c=>`<option value="${c}"${S.cat===c?' selected':''}>${c} (${catCount[c]})</option>`).join('')}</select></div>
+    <div class="field grow"><label for="cq">Cerca atleta</label><input type="search" id="cq" value="${esc(S.cq)}" placeholder="Nome o cognome" autocomplete="off"></div>
+  </div>
+  <h2 style="font-size:28px">${title}</h2>
+  <div id="clBody" style="display:flex;flex-direction:column;gap:12px">${clTable()}</div>`;
+}
+
+function v27(){
+  let h=`<p class="lead">Anticipazione delle gare 2027. Le date vengono da calendari pubblici online e vanno confermate con gli organizzatori.</p>
+  <div class="cards">`;
+  E27.forEach(e=>{
+    const k='27:'+e.key, d=date27(e);
+    h+=`<section class="card"><div class="card-h"><h3>${esc(e.name)}</h3>`;
+    h+=`<div class="date">${d?`<b style="color:var(--ink)">${esc(d)}</b>`:'<span class="tbd">Data da annunciare</span>'}</div>`;
+    h+=`<div class="date">${esc([e.place,e.dist].filter(Boolean).join(' · ')||'Distanze da annunciare')}</div></div></section>`;
+  });
+  h+=`</div>
+  <p class="src">${esc(X.nota2027||'')}</p>`;
+  return h;
+}
+
+/* ---------- disegno ---------- */
+function render(){
+  $('#tabs').innerHTML=TABS.map(([k,l,ic])=>`<button data-act="tab" data-v="${k}"${S.view===k&&S.race==null?' aria-current="page"':''}><svg viewBox="0 0 24 24" aria-hidden="true">${ic}</svg><span>${l}</span></button>`).join('');
+  let h;
+  if(S.race!=null) h=vRace(S.race);
+  else h=({gare:vGare,media:vMedia,atleti:vAtleti,classifica:vClass,prossime:v27})[S.view]();
+  $('#view').innerHTML=h;
+  if(S.editDate){const i=$('#dateInput');if(i){i.focus();i.select();}}
+}
+function go(v){S.view=v;S.race=null;S.editDate=null;if(location.hash.slice(1)!==v)location.hash=v;render();window.scrollTo(0,0);}
+
+/* ---------- eventi ---------- */
+document.addEventListener('click',ev=>{
+  const b=ev.target.closest('[data-act]');if(!b)return;
+  const a=b.dataset.act,v=b.dataset.v,i=b.dataset.i!=null?+b.dataset.i:null;
+  if(a==='tab')return go(v);
+  if(a==='race'){S.race=i;S.raceSex='ALL';render();window.scrollTo(0,0);}
+  else if(a==='back'){S.race=null;render();}
+  else if(a==='raceSex'){S.raceSex=v;render();}
+  else if(a==='ath'){S.ath=i;S.race=null;S.view='atleti';if(location.hash.slice(1)!=='atleti')location.hash='atleti';render();window.scrollTo(0,0);}
+  else if(a==='athBack'){S.ath=null;render();}
+  else if(a==='clSex'){S.sex=v;if(S.cat!=='ALL'&&v!=='ALL'&&S.cat[0]!==v)S.cat='ALL';S.shown=50;render();}
+  else if(a==='more'){S.shown+=50;$('#clBody').innerHTML=clTable();}
+});
+document.addEventListener('input',ev=>{
+  const t=ev.target;
+  if(t.id==='aq'){S.aq=t.value;$('#athRes').innerHTML=athList();}
+  else if(t.id==='cq'){S.cq=t.value;S.shown=50;$('#clBody').innerHTML=clTable();}
+});
+document.addEventListener('change',ev=>{
+  if(ev.target.id==='clCat'){S.cat=ev.target.value;S.shown=50;$('#clBody').innerHTML=clTable();}
+});
+window.addEventListener('hashchange',()=>{const v=fromHash();if(v!==S.view){S.view=v;S.race=null;S.editDate=null;render();}});
+
+S.view=fromHash();
+render();
+if('serviceWorker' in navigator&&location.protocol!=='file:'){navigator.serviceWorker.register('sw.js').catch(()=>{});}
+})();
+</script>
+</body></html>
